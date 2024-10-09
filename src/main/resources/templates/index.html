@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classroom Management</title>
+    <!-- Thêm link đến Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">Classroom Management</h1>
+
+    <!-- Form để thêm lớp học mới -->
+    <div class="mb-4">
+        <h2>Add New Classroom</h2>
+        <form id="classroomForm">
+            <div class="form-group">
+                <label for="name">Class Name:</label>
+                <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="teacher">Teacher:</label>
+                <input type="text" class="form-control" id="teacher" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Classroom</button>
+        </form>
+    </div>
+
+    <!-- Bảng hiển thị danh sách lớp học -->
+    <h2>Classroom List</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Teacher</th>
+        </tr>
+        </thead>
+        <tbody id="classroomTableBody">
+        <!-- Dữ liệu lớp học sẽ được thêm vào đây bằng JavaScript -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Thêm link đến jQuery và Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Mảng lưu trữ lớp học (Dữ liệu mẫu)
+    let classrooms = [
+        { id: 1, name: 'Class 1A', teacher: 'Mr. John' },
+        { id: 2, name: 'Class 1B', teacher: 'Ms. Jane' },
+        { id: 3, name: 'Class 2A', teacher: 'Mr. Smith' },
+        { id: 4, name: 'Class 2B', teacher: 'Ms. Alice' }
+    ];
+
+    // Hàm hiển thị danh sách lớp học
+    function displayClassrooms() {
+        const tableBody = document.getElementById('classroomTableBody');
+        tableBody.innerHTML = ''; // Xóa nội dung trước đó
+        classrooms.forEach(classroom => {
+            const row = `<tr>
+                            <td>${classroom.id}</td>
+                            <td>${classroom.name}</td>
+                            <td>${classroom.teacher}</td>
+                         </tr>`;
+            tableBody.innerHTML += row; // Thêm hàng mới vào bảng
+        });
+    }
+
+    // Xử lý sự kiện khi form được gửi
+    document.getElementById('classroomForm').addEventListener('submit', function (e) {
+        e.preventDefault(); // Ngăn không cho trang reload
+        const name = document.getElementById('name').value;
+        const teacher = document.getElementById('teacher').value;
+
+        // Thêm lớp học mới vào mảng
+        const newClassroom = {
+            id: classrooms.length + 1,
+            name: name,
+            teacher: teacher
+        };
+        classrooms.push(newClassroom);
+
+        // Cập nhật bảng
+        displayClassrooms();
+
+        // Reset form
+        document.getElementById('classroomForm').reset();
+    });
+
+    // Hiển thị danh sách lớp học khi trang được tải
+    displayClassrooms();
+</script>
+</body>
+</html>
